@@ -20,8 +20,6 @@ import javax.swing.JOptionPane;
 
 public class Start {
     public static void main(String[] args) throws IOException {
-
-
         String workingdir = System.getProperty("user.dir");
         JFileChooser chooser = new JFileChooser(new File(workingdir));
         int result = chooser.showOpenDialog(null);
@@ -81,7 +79,6 @@ public class Start {
         String trip = tsp.printShortTrip();
         long t1 = System.nanoTime();
         JOptionPane.showMessageDialog(null, trip);
-        //System.out.println("Time: "+ (t1-t0)+"ms");
         long t2 = System.nanoTime();
         int res = tsp.dynamicShortestPath();
         long t3 = System.nanoTime();
