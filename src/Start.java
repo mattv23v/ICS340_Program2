@@ -18,7 +18,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * This class reads text files into trip matrices
+ * This class reads text files into trip matrices and finds the program's run time. It outputs a text file
+ * of the results traveling salesman problem using dynamic programming and one using brute force, along with
+ * a list all possible trips.
  */
 public class Start {
     public static void main(String[] args) throws IOException {

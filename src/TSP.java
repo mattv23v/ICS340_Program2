@@ -58,7 +58,7 @@ public class TSP {
 	}
 
     /**
-     * Finds the shorest route using brute force.
+     * Finds the shortest route using brute force.
      */
 	public String printShortTrip(){
 		for(Trip t: tripList){
@@ -104,7 +104,6 @@ public class TSP {
 			row++;
 			column++;
 		}
-
 		returnValue =  intDistanceMatrix[certificate.get(column-1)][certificate.get(0)];
 		int total = sum + returnValue;
 
@@ -112,11 +111,9 @@ public class TSP {
 
 			tripList.add(new Trip(certificate, total, nodes));
 		}
-
 		if(sum<=maxPath){
 			return false;
 		}
-
 		return true;
 	}
 
@@ -136,20 +133,16 @@ public class TSP {
      */
 	private boolean permutations(List<Integer> used, List<Integer> unused){
 		if(unused.isEmpty()){
-
 			if(distanceReader(used)){
 				return true;
 			}
-
 		} else {
-
 			for(int i = 0; i < unused.size(); i++){
 				int item = unused.remove(0);
 				used.add(item);
 
 				if(permutations(used, unused))
 					return true;
-
 				used.remove(used.size()-1);
 				unused.add(item);
 			}
@@ -161,10 +154,8 @@ public class TSP {
      * Converts the string array to integers
      */
 	public void stringToIntArray(){
-		
 		int tableStringLength = distances.length;
 		intDistanceMatrix = new int[tableStringLength][tableStringLength];
-
 		for(int i=0; i<tableStringLength; i++) {
 			for(int j=0; j<tableStringLength; j++) {
 				intDistanceMatrix[i][j]= Integer.parseInt(distances[i][j]);
@@ -176,7 +167,6 @@ public class TSP {
      * Finds the shorest trip using dynamic programming
      */
 	public int dynamicShortestPath() {
-		//find shortest path length
 		int var;
 		int n = intDistanceMatrix.length;
 		int[][] dp = new int[1 << n][n];
