@@ -21,25 +21,34 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * Finds the shortest TSP Path
+ */
 public class TSP {
 	ArrayList<Trip> tripList = new ArrayList<Trip>();
 	ArrayList<String> tripListStrings = new ArrayList<String>();
-
 	int numCities;
 	String[][] distances;
 	int maxPath = Integer.MAX_VALUE;
 	ArrayList<String> nodes;
 	int[][] intDistanceMatrix;
 	String dynamicTrip;
-
 	public TSP(int cities, String[][] distanceMatrix, ArrayList<String> nodesString){
 		numCities = cities;
 		distances = distanceMatrix;
 		nodes = nodesString;
 	}
+
+    /**
+     * Returns dynamic trip result
+     */
 	public String getDynamicTrip(){
 		return dynamicTrip;
 	}
+
+    /**
+     * Returns the trip list from trip array of trip objects
+     */
 	public ArrayList<String> getTripList(){
 		for(Trip t: tripList){
 			String stringTrip = t.certificateKey();
@@ -48,10 +57,12 @@ public class TSP {
 		return tripListStrings;
 	}
 
+    /**
+     * Finds the shorest route using brute force.
+     */
 	public String printShortTrip(){
 		for(Trip t: tripList){
 			String stringTrip = t.certificateKey();
-			//System.out.println(stringTrip);
 		}
 		int min = Integer.MAX_VALUE;
 		Trip minTrip = null;
@@ -65,14 +76,19 @@ public class TSP {
 		return trip;
 
 	}
-	public void printDynamicTrip(List<Integer> certificate, int result){
 
+    /**
+     * Prints the results of the dynamic program.
+     */
+	public void printDynamicTrip(List<Integer> certificate, int result){
 		Trip dyTrip = new Trip(certificate, result, nodes);
 		String trip = dyTrip.certificateKey();
 		dynamicTrip = trip;
-		
-
 	}
+
+    /**
+     * Finds trip distances in the matrix
+     */
 	public boolean distanceReader(List<Integer> certificate){
 		int sum = 0;
 		int row = 0;
@@ -80,8 +96,6 @@ public class TSP {
 		int column = 1;
 
 		for(int i=0; i<numCities-1; i++){
-
-
 			int value =  intDistanceMatrix[certificate.get(column)][certificate.get(row)];
 			if(value == 0 ){
 				value =  intDistanceMatrix[certificate.get(row)][certificate.get(column)];
@@ -89,7 +103,6 @@ public class TSP {
 			sum +=  value;
 			row++;
 			column++;
-
 		}
 
 		returnValue =  intDistanceMatrix[certificate.get(column-1)][certificate.get(0)];
@@ -107,16 +120,20 @@ public class TSP {
 		return true;
 	}
 
+    /**
+     * Gets cities to send to permuation method
+     */
 	public boolean generateCities(){
 		List<Integer> cityList = new LinkedList<Integer>();
 		for(int i = 0; i < numCities; i++){
 			cityList.add(i);
 		}
-
 		return permutations(new LinkedList<Integer>(), cityList);
-
 	}
 
+    /**
+     * Finds all possible combinations of trips using permutations
+     */
 	private boolean permutations(List<Integer> used, List<Integer> unused){
 		if(unused.isEmpty()){
 
@@ -140,6 +157,9 @@ public class TSP {
 		return false;
 	}
 
+    /**
+     * Converts the string array to integers
+     */
 	public void stringToIntArray(){
 		
 		int tableStringLength = distances.length;
@@ -152,6 +172,9 @@ public class TSP {
 		}
 	}
 
+    /**
+     * Finds the shorest trip using dynamic programming
+     */
 	public int dynamicShortestPath() {
 		//find shortest path length
 		int var;
@@ -179,21 +202,13 @@ public class TSP {
 				}
 			}
 		}
-		//build path
 		int res = Integer.MAX_VALUE;
 		for (int i = 1; i < n; i++) {
-			int val3 = intDistanceMatrix[i][0];
-			int val4 = dp[(1 << n) - 1][i];
-			int val5 = dp[(1 << n) - 1][i] + intDistanceMatrix[i][0];
 			res = Math.min(res, dp[(1 << n) - 1][i] + intDistanceMatrix[i][0]);
-			
 
 		}
-
 		int current = (1 << n) - 1;
-
 		int[] order = new int[n];
-
 		int value=0;
 		int jvalue=0;
 		int last = 0;
@@ -219,8 +234,6 @@ public class TSP {
 				}
 			}
 			order[i] = bj;
-			
-
 			current ^= 1 << bj;
 			last = bj;
 		}
@@ -232,6 +245,4 @@ public class TSP {
 		printDynamicTrip(intList,res);
 		return res;
 	}
-
-
 }
